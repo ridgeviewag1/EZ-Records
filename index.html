@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EZ Records</title>
+  <meta name="description" content="Offline herbicide application records">
+  <meta name="theme-color" content="#2e6b34">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-maskable-512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="EZ Records">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>EZ Records</h1>
+    <button id="menuBtn" class="icon-btn" aria-label="Menu" aria-haspopup="true" aria-expanded="false">&#8942;</button>
+    <div id="menu" class="menu" hidden>
+      <button data-action="print">Print / save as PDF</button>
+      <button data-action="csv">Export spreadsheet (CSV)</button>
+      <button data-action="backup">Download backup</button>
+      <button data-action="restore">Restore from backup</button>
+      <button data-action="about">About</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search farm, field, product…" aria-label="Search records">
+    </div>
+    <p id="backupNote" class="note" hidden></p>
+    <ul id="list" class="list" aria-live="polite"></ul>
+    <p id="empty" class="empty" hidden>No spray records yet. Tap <strong>New record</strong> to begin.</p>
+  </main>
+
+  <button id="addBtn" class="fab">+ New record</button>
+
+  <!-- Record form -->
+  <dialog id="formDlg" class="sheet">
+    <form id="recForm" method="dialog" novalidate>
+      <h2 id="formTitle">New application</h2>
+      <div class="grid">
+        <label>Date &amp; time<input name="date" type="datetime-local" required></label>
+        <label>Farm<input name="farm" required list="dl-farm" autocomplete="off"></label>
+        <label>Field<input name="field" required list="dl-field" autocomplete="off"></label>
+        <label>Crop<input name="crop" required list="dl-crop" autocomplete="off"></label>
+        <label>Acres<input name="acres" type="number" inputmode="decimal" step="any" min="0" required></label>
+        <label>Herbicide product<input name="product" required list="dl-product" autocomplete="off"></label>
+        <label>Rate per acre<input name="rate" type="number" inputmode="decimal" step="any" min="0" required></label>
+        <label>Rate unit (e.g. fl oz/acre)<input name="unit" required list="dl-unit" autocomplete="off"></label>
+        <label>Applicator<input name="applicator" required list="dl-applicator" autocomplete="off"></label>
+        <label>Wind speed and direction<input name="wind" placeholder="e.g. 6 mph SW"></label>
+        <div class="gps">
+          <span>Location</span>
+          <span id="gpsText" class="muted">Not recorded</span>
+          <button type="button" id="gpsBtn" class="small">Use my location</button>
+          <button type="button" id="gpsClear" class="small link" hidden>Clear</button>
+        </div>
+        <label class="wide">Notes<textarea name="notes" rows="3"></textarea></label>
+      </div>
+      <p id="formError" class="error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="button" id="cancelBtn">Cancel</button>
+        <button type="submit" class="primary">Save offline</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Record detail -->
+  <dialog id="detailDlg" class="sheet">
+    <h2>Application record</h2>
+    <dl id="detail" class="detail"></dl>
+    <div class="actions">
+      <button type="button" id="deleteBtn" class="danger">Delete</button>
+      <span class="spacer"></span>
+      <button type="button" id="editBtn">Edit</button>
+      <button type="button" id="closeBtn" class="primary">Close</button>
+    </div>
+  </dialog>
+
+  <!-- About -->
+  <dialog id="aboutDlg" class="sheet">
+    <h2>About EZ Records</h2>
+    <p>Records are saved only on this device, inside this browser, and work without a signal.</p>
+    <p>Download a backup regularly. Clearing your browser data, uninstalling the app, or losing the phone will erase records that haven't been backed up.</p>
+    <p class="muted">EZ Records is not a compliance-certified application. Review product labels and applicable federal and state recordkeeping rules before relying on these records for compliance.</p>
+    <p id="storageInfo" class="muted"></p>
+    <div class="actions"><span class="spacer"></span><button type="button" class="primary" data-close>Close</button></div>
+  </dialog>
+
+  <input id="restoreFile" type="file" accept="application/json,.json" hidden>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <div id="printArea" class="print-only"></div>
+
+  <datalist id="dl-farm"></datalist><datalist id="dl-field"></datalist><datalist id="dl-crop"></datalist>
+  <datalist id="dl-product"></datalist><datalist id="dl-unit"></datalist><datalist id="dl-applicator"></datalist>
+
+  <script src="app.js"></script>
+</body>
+</html>
