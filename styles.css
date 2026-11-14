@@ -122,6 +122,27 @@ button.danger { color: var(--danger); border-color: #e7b9b5; }
   max-width: calc(100vw - 32px);
 }
 
+.gps-btns { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.hint { width: 100%; color: var(--green-dark); font-size: .88rem; }
+.grid label.check { display: flex; align-items: center; gap: 8px; width: 100%; color: var(--text); }
+.grid label.check input { width: auto; }
+.small-text { font-size: .9rem; margin: 0 0 8px; }
+.list.compact { margin-top: 4px; max-height: 50vh; overflow: auto; }
+a.btn-link {
+  display: inline-block; border: 1px solid var(--line); background: #fff; border-radius: 10px;
+  padding: 6px 12px; font-size: .9rem; color: var(--green-dark); text-decoration: none;
+}
+.loc-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+dialog.map-sheet { width: min(900px, calc(100vw - 12px)); padding: 12px; }
+.map { height: min(62vh, 560px); border-radius: 10px; border: 1px solid var(--line); background: #dfe5dc; }
+.map-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+.seg { display: inline-flex; border: 1px solid var(--green); border-radius: 10px; overflow: hidden; }
+.seg button { border: 0; background: #fff; padding: 8px 12px; cursor: pointer; color: var(--green-dark); }
+.seg button.on { background: var(--green); color: #fff; font-weight: 600; }
+.map-info { margin: 8px 0 0; min-height: 1.4em; }
+.vertex { box-sizing: border-box; border-radius: 50%; background: #ffd23f; border: 2px solid #222; }
+
 .print-only { display: none; }
 @media print {
   @page { size: landscape; margin: 12mm; }

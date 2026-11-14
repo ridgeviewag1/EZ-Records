@@ -4,7 +4,9 @@ EZ Records is a Progressive Web App (PWA) for logging herbicide applications in 
 
 ## Features
 - Record date/time, farm, field, crop, acres, herbicide product, rate and unit, applicator, wind, and notes
-- Optional GPS location for each record
+- Location for each record: use the phone's GPS, or pick the spot on a satellite map
+- **Farms & fields**: save each field's location once, or outline its boundary on the map. The app calculates the acres. New records for that farm and field then fill in the location and acres automatically.
+- **Google Maps**: every record and saved field has *Open in Google Maps* and *Directions* buttons
 - Search, view, edit, and delete records
 - Remembers farms, fields, products and other entries you've typed before, so they're suggested next time
 - **Print / save as PDF**: a printable table of all records, or just those matching your search
@@ -16,6 +18,9 @@ Records are stored **only on the device**, in the browser's offline storage (Ind
 - Clearing the browser's site data, uninstalling the app, or losing the phone erases records that haven't been backed up.
 - Use **Download backup** from the ⋮ menu regularly and keep the file somewhere safe (email, Google Drive, OneDrive). The app reminds you when a backup is overdue.
 - On iPhone, install the app to the Home Screen. Safari can clear storage for websites that haven't been visited in a while, and installed apps are protected from that.
+
+## Maps
+The in-app map uses [Leaflet](https://leafletjs.com) with Esri satellite imagery and OpenStreetMap street maps, so no Google API key or billing account is needed. Leaflet loads from unpkg.com the first time a map opens and is then cached. Map imagery needs a signal, but GPS, saved fields, and everything else work offline. Outlined acres are calculated from the boundary you draw, so they're only as accurate as the outline.
 
 ## Files
 | File | Purpose |
@@ -37,7 +42,7 @@ The app must be served over **HTTPS** to install and work offline. Any static ho
 - **iPhone (Safari):** open the site, tap Share → *Add to Home Screen*.
 
 ## Updating the app
-After changing any file, increase `VERSION` in `sw.js` (for example `ez-records-v2`). Phones pick up the new version the next time they open the app online.
+After changing any file, increase `VERSION` in `sw.js` (for example `ez-records-v3`). Phones pick up the new version the next time they open the app online.
 
 ## Testing on a computer
 From this folder run `python -m http.server 8000`, then open http://localhost:8000.

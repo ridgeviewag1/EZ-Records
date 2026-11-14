@@ -20,6 +20,7 @@
     <h1>EZ Records</h1>
     <button id="menuBtn" class="icon-btn" aria-label="Menu" aria-haspopup="true" aria-expanded="false">&#8942;</button>
     <div id="menu" class="menu" hidden>
+      <button data-action="fields">Farms &amp; fields</button>
       <button data-action="print">Print / save as PDF</button>
       <button data-action="csv">Export spreadsheet (CSV)</button>
       <button data-action="backup">Download backup</button>
@@ -57,8 +58,13 @@
         <div class="gps">
           <span>Location</span>
           <span id="gpsText" class="muted">Not recorded</span>
-          <button type="button" id="gpsBtn" class="small">Use my location</button>
-          <button type="button" id="gpsClear" class="small link" hidden>Clear</button>
+          <span class="gps-btns">
+            <button type="button" id="gpsBtn" class="small">Use my location</button>
+            <button type="button" id="mapPickBtn" class="small">Pick on map</button>
+            <button type="button" id="gpsClear" class="small link" hidden>Clear</button>
+          </span>
+          <span id="fieldHint" class="hint" hidden></span>
+          <label id="rememberWrap" class="check" hidden><input type="checkbox" id="rememberField" checked> Save this location for this field</label>
         </div>
         <label class="wide">Notes<textarea name="notes" rows="3"></textarea></label>
       </div>
@@ -79,6 +85,65 @@
       <span class="spacer"></span>
       <button type="button" id="editBtn">Edit</button>
       <button type="button" id="closeBtn" class="primary">Close</button>
+    </div>
+  </dialog>
+
+  <!-- Saved farms & fields -->
+  <dialog id="fieldsDlg" class="sheet">
+    <h2>Farms &amp; fields</h2>
+    <p class="muted small-text">Save each field's location and boundary once. New records for that farm and field fill in the location and acres automatically.</p>
+    <ul id="fieldList" class="list compact"></ul>
+    <p id="fieldsEmpty" class="empty" hidden>No saved fields yet.</p>
+    <div class="actions">
+      <button type="button" id="addFieldBtn">+ Add field</button>
+      <span class="spacer"></span>
+      <button type="button" class="primary" data-close>Close</button>
+    </div>
+  </dialog>
+
+  <!-- Edit one saved field -->
+  <dialog id="fieldDlg" class="sheet">
+    <form id="fieldForm" novalidate>
+      <h2 id="fieldTitle">Field</h2>
+      <div class="grid">
+        <label>Farm<input name="farm" required list="dl-farm" autocomplete="off"></label>
+        <label>Field<input name="field" required list="dl-field" autocomplete="off"></label>
+        <div class="gps">
+          <span>Location &amp; boundary</span>
+          <span id="fieldLocText" class="muted">Not set</span>
+          <span class="gps-btns">
+            <button type="button" id="fieldMapBtn" class="small">Set on map</button>
+            <a id="fieldGmaps" class="small btn-link" target="_blank" rel="noopener" hidden>Open in Google Maps</a>
+          </span>
+        </div>
+      </div>
+      <p id="fieldError" class="error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="button" id="fieldDeleteBtn" class="danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" id="fieldCancelBtn">Cancel</button>
+        <button type="submit" class="primary">Save field</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Map picker -->
+  <dialog id="mapDlg" class="sheet map-sheet">
+    <h2 id="mapTitle">Pick location</h2>
+    <div class="map-tools">
+      <div class="seg" role="group" aria-label="Map mode">
+        <button type="button" id="modePin" class="on">Drop pin</button>
+        <button type="button" id="modeOutline">Outline field</button>
+      </div>
+      <button type="button" id="mapUndo" class="small">Undo</button>
+      <button type="button" id="mapClear" class="small">Clear</button>
+      <button type="button" id="mapLocate" class="small">My location</button>
+    </div>
+    <div id="map" class="map"></div>
+    <p id="mapInfo" class="muted map-info"></p>
+    <div class="actions">
+      <button type="button" id="mapCancel">Cancel</button>
+      <button type="button" id="mapDone" class="primary">Use this</button>
     </div>
   </dialog>
 
